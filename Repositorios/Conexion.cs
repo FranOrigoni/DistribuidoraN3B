@@ -3,16 +3,31 @@ using System.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Extensions.Configuration;
+
 
 namespace Repositorios
 {
     public class Conexion
     {
-        public static string StringConexion { get; set; } = @"Data Source=(localdb)\mssqllocaldb; Initial Catalog=N3BMarzo2022ADO; Integrated Security=SSPI;";
+    
+        public static string ObtenerStringConexion()
+        {
+            string strCon = "";
+
+            ConfigurationBuilder cb = new ConfigurationBuilder();
+            cb.AddJsonFile("appsettings.json");
+            IConfiguration configuracion = cb.Build();
+
+            strCon = configuracion.GetConnectionString("Conexion1");
+
+            return strCon;
+        }
 
         public static SqlConnection ObtenerConexion()
         {
-            return new SqlConnection(StringConexion);
+            string strCon = ObtenerStringConexion();
+            return new SqlConnection(strCon);
         }
 
         public static void AbrirConexion(SqlConnection con)
