@@ -15,5 +15,7 @@ namespace CasosDeUso
 
         bool DarDeBajaCliente(int id);
 
+        IEnumerable<Cliente> TraerTodosLosClientes();
+
     }
 }

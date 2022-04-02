@@ -65,6 +65,7 @@ namespace Repositorios
                 }
 
                 com.ExecuteNonQuery();
+                obj.Id = idProducto;
                 tran.Commit();
                 ok = true;
                

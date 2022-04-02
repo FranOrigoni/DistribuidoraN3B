@@ -21,14 +21,29 @@ namespace TestDistribuidora
                 Nombre = "Alta Manejador 2",
                 Apellido = "Manejador 2",
                 Telefono = "123123123",
-                Email = "mail@manejador2.com",
+                Email = "mail@manejador5.com",
                 Puntos = 150,
                 Contrasenia = "clavemanejador"
             };
 
             bool ok = manejadorClis.AgregarNuevoCLiente(cli);
-            Console.WriteLine(ok);
+            Console.WriteLine(cli.Id);
+       
 
+            cli = new Cliente()
+            {
+                //Id = 4,
+                Nombre = "Alta Manejador 6",
+                Apellido = "Manejador 2",
+                Telefono = "123123123",
+                Email = "mail@manejador9.com",
+                Puntos = 150,
+                Contrasenia = "clavemanejador"
+            };
+
+            ok = manejadorClis.AgregarNuevoCLiente(cli);
+            Console.WriteLine(cli.Id);
+            Console.ReadKey();
 
             //Producto p = new Nacional()
             //{
@@ -42,7 +57,7 @@ namespace TestDistribuidora
             //};
 
             //bool ok = repoProds.Add(p);
-           
+
 
             //bool ok = repoClis.Remove(3);
             //Console.WriteLine(ok);

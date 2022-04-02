@@ -32,6 +32,11 @@ namespace CasosDeUso
             return Repoclientes.Remove(id);
         }
 
+        public IEnumerable<Cliente> TraerTodosLosClientes()
+        {
+            return Repoclientes.FindAll();
+        }
+
         // resto de operaciones crud y funcionalides (casos de uso) de clientes 
     }
 }

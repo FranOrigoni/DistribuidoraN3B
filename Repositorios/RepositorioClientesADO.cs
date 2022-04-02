@@ -16,7 +16,7 @@ namespace Repositorios
 
             SqlConnection con = Conexion.ObtenerConexion();
 
-            string sql = "INSERT INTO Clientes VALUES(@nom, @ape, @tel, @pass, @puntos, @email);";
+            string sql = "INSERT INTO Clientes VALUES(@nom, @ape, @tel, @pass, @puntos, @email); SELECT CAST (SCOPE_IDENTITY() AS INT);";
             SqlCommand com = new SqlCommand(sql, con);
 
             com.Parameters.AddWithValue("@nom", obj.Nombre);
@@ -29,8 +29,9 @@ namespace Repositorios
             try
             {
                 Conexion.AbrirConexion(con);
-                int filasAfectadas  = com.ExecuteNonQuery();
-                ok = filasAfectadas == 1;
+                int idCliente  = (int)com.ExecuteScalar();
+                obj.Id = idCliente;
+                ok = true;
                 Conexion.CerrarConexion(con);
             }
             catch
