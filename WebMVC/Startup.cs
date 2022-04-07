@@ -30,21 +30,13 @@ namespace WebMVC
             services.AddControllersWithViews();
 
             services.AddScoped<IManejadorClientes, ManejadorClientes>();
+            services.AddScoped<IRepositorioClientes, RepositorioClientesADO>();
+            services.AddScoped<IRepositorioProductos, RepositorioProductosADO>();
+            services.AddScoped<IRepositorioCategorias, RepositorioCategoriasADO>();
+            services.AddScoped<IRepositorioProveedores, RepositorioProveedoresADO>();
+            services.AddScoped<IManejadorProductos, ManejadorProductos>();
 
-            string tipoRepo = Configuration.GetSection("TipoRepos").Value;
 
-            if (tipoRepo == "ADO")
-            {
-                services.AddScoped<IRepositorioClientes, RepositorioClientesADO>();
-            }
-            else if (tipoRepo == "MEMORIA")
-            {
-                services.AddScoped<IRepositorioClientes, RepositorioClientesMemoria>();
-            }
-            else
-            {
-                throw new Exception("NO EXISTE EL TIPO DE REPOSITORIO O NO FUE ESPECIFICADO EN EL ARCHIVO DE CONFIG");
-            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,7 +63,7 @@ namespace WebMVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Productos}/{action=Index}/{id?}");
             });
         }
     }

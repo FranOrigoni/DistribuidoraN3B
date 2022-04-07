@@ -6,7 +6,7 @@ namespace Dominio.EntidadesNegocio
 {
     public class Importado : Producto
     {
-        public sbyte PaisOrigen { get; set; }
+        public string PaisOrigen { get; set; }
         public static decimal ImpuestoImportacion { get; set; }
 
         public override string Tipo()

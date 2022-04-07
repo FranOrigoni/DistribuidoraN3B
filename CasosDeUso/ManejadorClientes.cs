@@ -22,7 +22,7 @@ namespace CasosDeUso
 
         public bool AgregarNuevoCLiente(Cliente c)
         {
-            // RepositorioClientesADO repoclis = new RepositorioClientesADO();
+           
 
             return Repoclientes.Add(c);
         }

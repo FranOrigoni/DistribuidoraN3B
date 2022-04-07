@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Dominio.EntidadesNegocio.Producto>
+@using Dominio.EntidadesNegocio
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Foto)
+            </th>
+
+            <th>
+                Categoria
+            </th>
+            <th>
+                Proveedor
+            </th>
+            <th>
+                Tipo
+            </th>
+            <th>
+                Eco-amigable
+            </th>
+            <th>
+                Pais Origen
+            </th>
+            <th>
+                Cant. Valoraciones
+            </th>
+
+
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Foto)
+            </td>
+
+            <td>
+                @item.Categoria.Nombre
+            </td>
+            <td>
+                @item.Proveedor.RazonSocial
+            </td>
+            <td>
+                @item.Tipo()
+            </td>
+
+            @if (item.Tipo() == "Nacional")
+            {
+                Nacional n = item as Nacional;
+                <td>
+                    <span>@(n.EcoAmigable ? "Si" : "No")</span>
+                </td>
+                <td>
+                    N/A
+                </td>
+
+            }
+            else
+            {
+                Importado i = item as Importado;
+                <td>
+                    N/A
+                </td>
+                <td>
+                    @i.PaisOrigen
+                </td>
+            }
+
+            <td>
+                @item.Valoraciones.Count()
+            </td>
+            <td>
+
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
