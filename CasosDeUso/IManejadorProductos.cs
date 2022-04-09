@@ -10,5 +10,9 @@ namespace CasosDeUso
         public IEnumerable<Producto> TraerTodosLosProductos();
 
         public bool AgregarNuevoProducto(Producto prod, int idCategoria, int idProveedor);
+
+        IEnumerable<Categoria> TraerTodasLasCategorias();
+        IEnumerable<Proveedor> TraerTodosLosProveedores();
+
     }
 }

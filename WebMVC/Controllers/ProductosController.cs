@@ -6,16 +6,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using CasosDeUso;
 using Dominio.EntidadesNegocio;
+using WebMVC.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace WebMVC.Controllers
 {
     public class ProductosController : Controller
     {
         public IManejadorProductos ManejadorProductos { get; set; }
+        public IWebHostEnvironment WebHostEnvironment { get; set; }
 
-        public ProductosController(IManejadorProductos manProds)
+        public ProductosController(IManejadorProductos manProds, IWebHostEnvironment whenv )
         {
             ManejadorProductos = manProds;
+            WebHostEnvironment = whenv;
         }
 
         // GET: ProductosController
@@ -33,19 +38,49 @@ namespace WebMVC.Controllers
         }
 
         // GET: ProductosController/Create
-        public ActionResult Create()
+        public ActionResult CreateNacional()
         {
-            return View();
+            ViewModelNacional vm = new ViewModelNacional();
+            vm.Categorias = ManejadorProductos.TraerTodasLasCategorias();
+            vm.Proveedores = ManejadorProductos.TraerTodosLosProveedores();
+
+            return View(vm);
         }
 
         // POST: ProductosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult CreateNacional(ViewModelNacional vm)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                string nomArchivo = vm.Imagen.FileName;
+                nomArchivo = vm.Producto.Codigo + "_" + nomArchivo;
+                vm.Producto.Foto = nomArchivo;
+
+                bool ok = ManejadorProductos.AgregarNuevoProducto(vm.Producto, vm.IdCategoriaSeleccionada, vm.IdProveedorSeleccionado);
+
+
+                if (ok)
+                {
+                    string rutaRaiz = WebHostEnvironment.WebRootPath;
+                    string rutaImagenes = Path.Combine(rutaRaiz, "imagenes");
+                    string rutaArchivo = Path.Combine(rutaImagenes, nomArchivo);
+
+                    FileStream stream = new FileStream(rutaArchivo, FileMode.Create);
+                    vm.Imagen.CopyTo(stream);
+
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Error("NO SE PUDO HACER EL ALTA");
+                    vm.Categorias = ManejadorProductos.TraerTodasLasCategorias();
+                    vm.Proveedores = ManejadorProductos.TraerTodosLosProveedores();
+                    return View(vm);
+                }
+
+              
             }
             catch
             {

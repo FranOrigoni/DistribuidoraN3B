@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Repositorios\Repositorios.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\imagenes\" />
+  </ItemGroup>
+
 </Project>

@@ -115,7 +115,7 @@ namespace Repositorios
 
                 Conexion.CerrarConexion(con);
             }
-            catch(Exception ex)
+            catch
             {
                 throw;
             }

@@ -49,5 +49,15 @@ namespace CasosDeUso
         {
             return RepoProductos.FindAll();
         }
+
+        public IEnumerable<Categoria> TraerTodasLasCategorias()
+        {
+            return RepoCategorias.FindAll();
+        }
+
+        public IEnumerable<Proveedor> TraerTodosLosProveedores()
+        {
+            return RepoProveedores.FindAll();
+        }
     }
 }
